@@ -95,6 +95,18 @@ $(function() {
          * Remember, loadFeed() is asynchronous.
          */
         describe('New Feed Selection', () => {
-
-        })
+            let currentFeed;
+            let lastFeed;
+            beforeEach((done) => {
+                $('.feed').empty();
+                loadFeed(0, () => {
+                    lastFeed = $('.feed').html();
+                    loadFeed(2, done);
+                });
+            });
+            it('ensures content actually changes whne loadFeed() is run', function() {
+                currentFeed = $('.feed').html();
+                expect(lastFeed).not.toBe(currentFeed);
+            });
+        });
 }());
